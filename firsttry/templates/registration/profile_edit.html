@@ -1,0 +1,29 @@
+{% extends 'registration/base.html' %}
+{#<h3> <a href="{% url 'logout'  %}"> logout </a><h3>#}
+{% block content %}
+    <a href="{% url 'logout'  %}"> logout </a>
+    <a href="{% url 'home' %}"> back</a>
+  <h2>Welcome,
+      {% if user.user_name %}
+          {{ user.user_name }}!
+
+        {% else %}
+      {{ user.email }}!
+   {% endif %}</h2>
+     <form method="GET">
+
+    {% csrf_token %}
+    {% for field in form%}
+      <p>
+          <samp>{{ field.label_tag }} <br>
+              {{ field }}
+        {{  user.field}}  </samp>
+
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+        </p>
+    {% endfor %}
+
+  </form>
+{% endblock %}
