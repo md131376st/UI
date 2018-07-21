@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.core.mail import send_mail
-from datetime import timezone
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
@@ -25,7 +24,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     AbstractBaseUser.password = (_('رمز عبور'))
     objects = UserManager()
-    USERNAME_FIELD = 'email'or'user_name'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'national_number']
 
     class Meta:
@@ -54,5 +53,19 @@ class User(AbstractBaseUser, PermissionsMixin):
         '''
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
-#
-# User.objects.create(email='m1@gmail.com', first_name='mona',last_login='da', date_Birth=1/2/12, national_number='1',contact='1', user_name='11')
+
+class Request(models.Model):
+    writer = models.ForeignKey('User', on_delete=models.CASCADE)
+    subject = models.CharField(_('موضوع'), max_length=500)
+    text = models.TextField(_('درخواست'))
+    SRATUS = ((0, 'درانتظار پاسخ رهی'), (1, 'در حال پاسخ دهی'),  (2, 'اتمام کار'))
+    state = models.IntegerField(_('وضعیت'), choices=SRATUS, default=0)
+    response = models.TextField(_('پاسخ'))
+
+    class Meta:
+        db_table = 'Requests'
+        verbose_name = _('request')
+        verbose_name_plural = _('requests')
+
+    def __str__(self):
+        return self.text

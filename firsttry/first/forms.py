@@ -1,19 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
-
+from .models import User, Request
+from django.contrib.auth.forms import AuthenticationForm
 
 # class SignUpForm(UserCreationForm):
 class SignUpForm(forms.ModelForm):
-    # email = forms.EmailField(unique=True, help_text="1@gmail.com")
-    # first_name = forms.CharField( max_length=30, blank=True)
-    # last_name = forms.CharField( max_length=30, blank=True)
-    # date_Birth = forms.DateTimeField( blank=True, help_text="روز-ماه-سال")
-    # contact = forms.CharField(max_length=30, blank=True)
-    # user_gender = forms.CharField( choices=((0, 'زن'), (1, 'مرد')), max_length=30, default='زن')
-    # user_name = forms.CharField( unique=True, max_length=30)
-    # forms.
-
     class Meta:
         model = User
         fields = ['email', 'first_name', 'last_name', 'date_Birth', 'contact', 'user_name', 'national_number','password']
@@ -24,5 +15,24 @@ class Home(forms.ModelForm):
     class Meta:
         model = User
         fields = ['email', 'first_name', 'last_name', 'user_name', 'contact', 'national_number', 'date_Birth',
-                  'avatar']
+     'avatar']
 
+
+class RequestForm(forms.ModelForm):
+    class Meta:
+        model = Request
+        fields = ['writer', 'subject', 'text']
+
+
+class LoginForm(AuthenticationForm):
+    username = forms.EmailField(label="آدرس ایمیل",max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'email'}))
+    password = forms.CharField(label="رمز عبور", max_length=30,
+                               widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'password'}))
+    # class Meta:
+    #     model = User
+    #     fields = ['email', 'password']
+
+# class CustomAuthenticationForm(AuthenticationForm):
+
+    # pass
+#

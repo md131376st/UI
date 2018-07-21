@@ -1,0 +1,35 @@
+{% extends 'registration/base.html' %}
+{#<h3> <a href="{% url 'logout'  %}"> logout </a><h3>#}
+{% block content %}
+    <a href="{% url 'logout'  %}"> logout </a>
+    <h1>درخواست شما ثبت شد</h1>
+
+{#  <h2>Welcome,#}
+{#      {% if user.user_name %}#}
+{#          {{ user.user_name }}!#}
+{##}
+{#        {% else %}#}
+{#      {{ user.email }}!#}
+{#   {% endif %}</h2>#}
+
+    <h3>
+        <a href="{% url 'request' %}"> new request </a> <br>
+         <a href=" {% url 'home' %}"> home </a> <br>
+   </h3>
+{#     <form method="GET">#}
+{##}
+{#    {% csrf_token %}#}
+{#    {% for field in form%}#}
+{#      <p>#}
+{#          <samp>{{ field.label_tag }} <br>#}
+{#              {{ field }}#}
+{#        {{  user.field}}  </samp>#}
+{##}
+{#        {% for error in field.errors %}#}
+{#          <p style="color: red">{{ error }}</p>#}
+{#        {% endfor %}#}
+{#        </p>#}
+{#    {% endfor %}#}
+{##}
+{#  </form>#}
+{% endblock %}

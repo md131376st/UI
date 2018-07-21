@@ -4,4 +4,24 @@
     <a href="{% url 'logout'  %}"> logout </a>
     <a href="{% url 'home' %}"> back</a>
 
+    <form method="POST">
+    {% csrf_token %}
+{#     <p>hi</p>#}
+{#    <p>{%  field  %}</p>#}
+    {% for field in form %}
+
+{#        <p>hi</p>#}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+      </p>
+    {% endfor %}
+{#     <button type="submit" >   </button>#}
+{#        <form action="{% url 'requestdone' %} ">#}
+{#            <input type="submit" value="ثبت ردخواست" />#}
+{#        </form>#}
+    <button onclick="location.href={% url 'requestdone' %}" type="button">
+   ثبت ردخواست </button>
+    </form>
+
 {% endblock %}

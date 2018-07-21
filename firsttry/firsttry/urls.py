@@ -17,18 +17,19 @@
 from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
 from django.contrib import admin
+from first.forms import LoginForm
 
-from first import views
-
+from first import views as viewsMe
 
 urlpatterns = [
     # url(r'^$', views.Home, name='home'),
     url(r'',include('first.urls')),
-    url(r'^login/$', auth_views.login, {'template_name': 'registration/login.html'}, name='login'),
+    url(r'^login/$', auth_views.login, {'template_name': 'registration/login.html', 'authentication_form': LoginForm}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
-    url(r'^signup/$', views.signup, {'template_name': 'registration/signup.html', 'next_page': 'registration/home.html'}, name='signup'),
+    url(r'^signup/$', viewsMe.signup, {'template_name': 'registration/signup.html', 'next_page': 'registration/home.html'}, name='signup'),
     url(r'^admin/', admin.site.urls),
-    url(r'home/$', views.home, {'template_name': 'registration/home.html'}, name='home'),
-    url(r'edit/$', views.edit, {'template_name': 'registration/profile_edit.html'}, name='edit'),
-    url(r'request/$' ,views.request, {'template_name': 'reqistration/request.html'}, name='request')
+    url(r'home/$', viewsMe.home, {'template_name': 'registration/home.html'}, name='home'),
+    url(r'edit/$', viewsMe.edit, {'template_name': 'registration/profile_edit.html'}, name='edit'),
+    url(r'request/$', viewsMe.request, {'template_name': 'registration/request.html', 'next_page':'registration/requestdone.html'}, name='request'),
+    url(r'requestdone/$', viewsMe.requestdone, {'template_name': 'registration/requestdone.html'}, name='requestdone')
 ]
